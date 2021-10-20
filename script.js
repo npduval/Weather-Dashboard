@@ -7,7 +7,7 @@ function handleSearch(event) {
 
     if (search) {
         getLocation(search);
-        //clear city info on page
+        //add city to page
     } else {
         alert("Please enter a valid City, State search")
     }
@@ -35,10 +35,21 @@ function handleSearch(event) {
     
 
   };
-
+//DEVNOTE: may way to use &exclude={part} to exlude minutely,hourly,alerts 
    
- //getWeather
+  const getWeather = function (lattitude,longitude){
+      let weatherURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lattitude + '&lon=' + longitude + '&appid=75e435a88e4bd5b36dbaea785d477577';
 
+      fetch(weatherURL)
+      .then (function (responce){
+        if (responce.ok){
+            responce.json()
+    .then (function (data){
+        console.log(data);  
+      });
+  }
+})
+  };
 
 
 
