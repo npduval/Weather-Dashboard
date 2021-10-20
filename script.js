@@ -21,7 +21,11 @@ function handleSearch(event) {
         if (responce.ok){
             responce.json()
     .then (function (data){
-        getWeather(data.location);
+        console.log(data);
+
+        let lattitude = data[0].lat;
+        let longitude = data[0].lon;
+        getWeather(lattitude,longitude);
     });
 
         } else  {
@@ -33,7 +37,7 @@ function handleSearch(event) {
   };
 
    
-    
+ //getWeather
 
 
 
