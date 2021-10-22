@@ -1,13 +1,21 @@
 const searchCityBtn = document.getElementById('searchCity');
 const cityInput = document.getElementById('city');
+const tempEl = document.getElementById('temp');
+const windEl = document.getElementById('wind');
+const humidityEl = document.getElementById('humid');
+const uvEl = document.getElementById('UV');
+const cityOutput = document.getElementById('cityWeather')
+//display previously searched cities to page
 
+//Dev Notes: add a control for when no city is found
 function handleSearch(event) {
     event.preventDefault();
     let search = cityInput.value;
 
     if (search) {
         getLocation(search);
-        //add city to page
+        cityOutput.textContent = cityInput.value;
+        localStorage.setItem("City" , cityInput.value);
     } else {
         alert("Please enter a valid City, State search")
     }
@@ -23,7 +31,7 @@ function handleSearch(event) {
     .then (function (data){
         console.log(data);
 
-        let lattitude = data[0].lat;
+        let lattitude = data[0].lat; 
         let longitude = data[0].lon;
         getWeather(lattitude,longitude);
     });
@@ -35,17 +43,30 @@ function handleSearch(event) {
     
 
   };
-//DEVNOTE: may way to use &exclude={part} to exlude minutely,hourly,alerts 
    
   const getWeather = function (lattitude,longitude){
-      let weatherURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lattitude + '&lon=' + longitude + '&appid=75e435a88e4bd5b36dbaea785d477577';
+      let weatherURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lattitude + '&lon=' + longitude + '&exclude=minutely,hourly,alerts&units=imperial&appid=75e435a88e4bd5b36dbaea785d477577';
 
       fetch(weatherURL)
       .then (function (responce){
         if (responce.ok){
             responce.json()
     .then (function (data){
-        console.log(data);  
+        console.log(data);
+        let temp = data.current.temp;
+        tempEl.textContent = "Temp: " + temp + "f";
+        let wind = data.current.wind_speed;
+        windEl.textContent = "Wind Speed: " + wind + "mph";
+        let humidity = data.current.humidity;
+        humidityEl.textContent = "Humidity: " + humidity;
+        let uvIndex = data.current.uvi;
+        uvEl.textContent = "UV Index: " + uvIndex;
+
+        //if else for UV 
+
+        //display 5 day weather - displays the date, 
+        // an icon representation of weather conditions, 
+        // the temperature, the wind speed, and the humidity
       });
   }
 })

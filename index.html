@@ -17,19 +17,18 @@
                 <div class="card text-center">
                     <div class="card-body">
                     <h2 class="card-title">Search for a city</h2>
-                    <input type="text" class="form-control" placeholder="Boston,MA" id="city"><br>
-                    <p>Search by City and State code in the following format:<br> City, 2 letter State code. (ie New York,NY)</p>
+                    <input type="text" class="form-control" placeholder="Boston" id="city"><br>
                     <button type="submit" class="btn btn-primary w-100" id="searchCity">Search</a>
                     </div>
                 </div>
             </section>
             <section class="col-9" id="weather">
-                <h2 id="city">Fake City</h2>
+                <h2 id="cityWeather">Boston, MA</h2>
                 <ul>
-                    <li>Temp:</li>
-                    <li>Wind:</li>
-                    <li>Humidity:</li>
-                    <li>UV Index:</li>
+                    <li id="temp">Temp:</li>
+                    <li id="wind">Wind Speed:</li>
+                    <li id="humid">Humidity:</li>
+                    <li id="UV">UV Index:</li>
                 </ul>
             </section>
         </div>
