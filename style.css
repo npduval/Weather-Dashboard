@@ -8,3 +8,6 @@ h1 {
 #weather {
   border: 2px solid black;
 }
+h2 {
+  display: inline;
+}
