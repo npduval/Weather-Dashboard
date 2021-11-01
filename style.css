@@ -2,11 +2,27 @@ h1 {
     text-align: center;
     color: white;
     background-color: rebeccapurple;
-    height: 65px;
-    
+    height: 65px;   
 }
-#weather {
+
+#weather1 {
   border: 2px solid black;
+  font-weight: bold;
+}
+
+#weather2 {
+  border: 2px solid black;
+  display: none; 
+}
+ #menu {
+   display:none;
+ }
+
+.searchBtn {
+  list-style-type: none;
+  align-content: center;
+  width: 100%;
+  margin: 10px 0;
 }
 
 h2 {

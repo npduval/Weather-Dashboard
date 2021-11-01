@@ -12,16 +12,21 @@ const dailyIcon = document.getElementsByName("icons")
 const dailyTemp = document.getElementsByName("temperature")
 const dailyWind = document.getElementsByName("windSpeed")
 const dailyHumid = document.getElementsByName("humidity")
+const fiveDay = document.getElementById("weather2")
+const searchedCity = document.getElementById("menu")
+const searchHist = [];
 //TODO: display previously searched cities to page
 
 // takes user input and saves to local storage
 function handleSearch(event) {
     event.preventDefault();
     let search = cityInput.value;
+    fiveDay.style.display = "block";
+
   
     if (search) {
         getLocation(search);
-        localStorage.setItem("City" , cityInput.value);
+
     } else {
         alert("Please enter a valid City")
     }
@@ -45,6 +50,8 @@ function handleSearch(event) {
             let lattitude = data[0].lat; 
             let longitude = data[0].lon;
         getWeather(lattitude,longitude);
+        searchHist.push(cityOut);
+        addHistory();
         } else {
             alert("Please enter a valid City")
         }
@@ -77,9 +84,9 @@ function handleSearch(event) {
         uvEl.textContent = "UV Index: " + uvIndex;
             
             if (uvIndex < 5) {
-             uvEl.setAttribute("class", "favorable")  
+                uvEl.setAttribute("class", "favorable")  
             } else if (uvIndex >= 5 && uvIndex < 8)
-            uvEl.setAttribute("class", "moderate")
+                uvEl.setAttribute("class", "moderate")
             else {
                 uvEl.setAttribute("class", "moderate")
             };
@@ -102,7 +109,7 @@ function handleSearch(event) {
        } else if (data.current.weather[0].main = "Snow") {
         weatherIcon.setAttribute( "class", "fas fa-snowflake");
        } else  {
-           weatherIcon.classList.add("fas fa-sun");
+           weatherIcon.setAttribute( "class", "fas fa-sun");
        };
 
        forcast(data);
@@ -129,6 +136,22 @@ function handleSearch(event) {
 
     }
   };
+  
+  function addHistory(cityOut) {
+      searchedCity.style.display ="block";
+      while(searchedCity.firstChild) {
+          searchedCity.removeChild(searchedCity.firstChild);
+      }
+      for (i= 0; i< searchHist.length; i++){
+        
+         let element = document.createElement("button");
+         element.appendChild(document.createTextNode(searchHist[i]));
+         element.setAttribute ("class", "searchBtn");
+         element.setAttribute ("id" ,"button" + i)
+         searchedCity.appendChild(element);
 
+      }
+
+  };
 
 searchCityBtn.addEventListener('click', handleSearch);
