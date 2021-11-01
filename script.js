@@ -1,11 +1,17 @@
-const searchCityBtn = document.getElementById('searchCity');
-const cityInput = document.getElementById('city');
-const dateEl = document.getElementById('dateStamp');
-const tempEl = document.getElementById('temp');
-const windEl = document.getElementById('wind');
-const humidityEl = document.getElementById('humid');
-const uvEl = document.getElementById('UV');
-const cityOutput = document.getElementById('cityWeather')
+const searchCityBtn = document.getElementById("searchCity");
+const cityInput = document.getElementById("city");
+const dateEl = document.getElementById("dateStamp");
+const tempEl = document.getElementById("temp");
+const windEl = document.getElementById("wind");
+const humidityEl = document.getElementById("humid");
+const uvEl = document.getElementById("UV");
+const cityOutput = document.getElementById("cityWeather")
+const weatherIcon = document.getElementById("icon")
+const dates = document.getElementsByName("date")
+const dailyIcon = document.getElementsByName("icons")
+const dailyTemp = document.getElementsByName("temperature")
+const dailyWind = document.getElementsByName("windSpeed")
+const dailyHumid = document.getElementsByName("humidity")
 //TODO: display previously searched cities to page
 
 // takes user input and saves to local storage
@@ -62,15 +68,21 @@ function handleSearch(event) {
     .then (function (data){
         console.log(data);
         let temp = data.current.temp;
-        tempEl.textContent = "Temp: " + temp + "f";
+        tempEl.textContent = "Temp: " + temp + "°F";
         let wind = data.current.wind_speed;
-        windEl.textContent = "Wind Speed: " + wind + "mph";
+        windEl.textContent = "Wind Speed: " + wind + "MPH";
         let humidity = data.current.humidity;
         humidityEl.textContent = "Humidity: " + humidity;
         let uvIndex = data.current.uvi;
         uvEl.textContent = "UV Index: " + uvIndex;
             
-            //TODO if (uvIndex >=0
+            if (uvIndex < 5) {
+             uvEl.setAttribute("class", "favorable")  
+            } else if (uvIndex >= 5 && uvIndex < 8)
+            uvEl.setAttribute("class", "moderate")
+            else {
+                uvEl.setAttribute("class", "moderate")
+            };
         
         let unixDate = data.current.dt;
         let milliseconds = unixDate * 1000;
@@ -78,22 +90,45 @@ function handleSearch(event) {
         let dateStamp = date.toLocaleDateString();
         dateEl.textContent = "(" + dateStamp + ")";
 
-        //TODO if else for weather icon
+        //uses font awesome to display large weather icon
+        if (data.current.weather[0].main = "Clouds") {
+            weatherIcon.setAttribute( "class", "fas fa-cloud");
+       } else if (data.current.weather[0].main = "Thunderstorm"){
+        weatherIcon.setAttribute( "class", "fas fa-bolt");
+       } else if (data.current.weather[0].main = "Drizzle") {
+        weatherIcon.setAttribute( "class", "fas fa-cloud-rain");
+       } else if (data.current.weather[0].main = "Rain") {
+        weatherIcon.setAttribute( "class", "fas fa-cloud-rain");
+       } else if (data.current.weather[0].main = "Snow") {
+        weatherIcon.setAttribute( "class", "fas fa-snowflake");
+       } else  {
+           weatherIcon.classList.add("fas fa-sun");
+       };
 
-        
-
-    
-
-        //display 5 day weather - displays the date, 
-        // an icon representation of weather conditions, 
-        // the temperature, the wind speed, and the humidity
+       forcast(data);
       });
   }
 })
   };
 
+  function forcast(data){
+    
+    for (let i = 0; i < 5; i++) {
+        
+       let date = data.daily[i].dt;
+       let milliseconds = date * 1000;
+       let dateTime = new Date(milliseconds);
+       let dailyDate = dateTime.toLocaleDateString();
+       dates[i].textContent = dailyDate;
+       let image = data.daily[i].weather[0].icon
+       const URL = "http://openweathermap.org/img/wn/" + image + "@2x.png";
+       dailyIcon[i].setAttribute ("src", URL);
+       dailyTemp[i].textContent = "Temp: " + data.daily[i].temp.day + " °F";
+       dailyWind[i].textContent = "Wind: " + data.daily[i].wind_speed + " MPH";
+       dailyHumid[i].textContent = "Humidity: " + data.daily[i].humidity;
 
-
+    }
+  };
 
 
 searchCityBtn.addEventListener('click', handleSearch);

@@ -8,6 +8,25 @@ h1 {
 #weather {
   border: 2px solid black;
 }
+
 h2 {
   display: inline;
+}
+
+.favorable {
+  background-color: green;
+  color: white;
+  width: fit-content;
+}
+
+.moderate {
+  background-color: yellow;
+  color: white;
+  width: fit-content;
+}
+
+.severe {
+  background-color: yellow;
+  color: white;
+  width: fit-content;
 }
