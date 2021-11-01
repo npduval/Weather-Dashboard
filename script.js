@@ -35,7 +35,7 @@ function handleSearch(event) {
 
     // gets long and lat of user input and displays city name to screen
   const getLocation = function (search){
-    let requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + search + '&limit=1&appid=75e435a88e4bd5b36dbaea785d477577';  //geocodeing API
+    let requestUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + search + '&limit=1&appid=75e435a88e4bd5b36dbaea785d477577';  //geocodeing API
 
     fetch(requestUrl)
     .then (function (responce){
@@ -128,7 +128,7 @@ function handleSearch(event) {
        let dailyDate = dateTime.toLocaleDateString();
        dates[i].textContent = dailyDate;
        let image = data.daily[i].weather[0].icon
-       const URL = "http://openweathermap.org/img/wn/" + image + "@2x.png";
+       const URL = "https://openweathermap.org/img/wn/" + image + "@2x.png";
        dailyIcon[i].setAttribute ("src", URL);
        dailyTemp[i].textContent = "Temp: " + data.daily[i].temp.day + " °F";
        dailyWind[i].textContent = "Wind: " + data.daily[i].wind_speed + " MPH";
