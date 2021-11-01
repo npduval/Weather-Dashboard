@@ -15,7 +15,7 @@ const dailyHumid = document.getElementsByName("humidity")
 const fiveDay = document.getElementById("weather2")
 const searchedCity = document.getElementById("menu")
 const searchHist = [];
-//TODO: display previously searched cities to page
+
 
 // takes user input and saves to local storage
 function handleSearch(event) {
@@ -137,7 +137,7 @@ function handleSearch(event) {
     }
   };
   
-  function addHistory(cityOut) {
+  function addHistory() {
       searchedCity.style.display ="block";
       while(searchedCity.firstChild) {
           searchedCity.removeChild(searchedCity.firstChild);
@@ -153,5 +153,12 @@ function handleSearch(event) {
       }
 
   };
+
+searchedCity.addEventListener("click", function (event) {
+    console.log(event.target);
+    let search = event.target.innerText;
+    getLocation(search);
+
+});
 
 searchCityBtn.addEventListener('click', handleSearch);
